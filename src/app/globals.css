@@ -1,0 +1,543 @@
+@import "tailwindcss";
+
+/* ========================================
+   1. DESIGN TOKENS
+======================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* Backgrounds */
+  --background: #081310;
+  --background-secondary: #0b1915;
+  --surface: #10211b;
+  --surface-hover: #152b23;
+  --surface-elevated: #193229;
+
+  /* Text */
+  --foreground: #edf7f1;
+  --foreground-secondary: #b7cbc0;
+  --muted: #82988c;
+  --muted-foreground: #647b6f;
+
+  /* Brand colors */
+  --primary: #34d399;
+  --primary-hover: #6ee7b7;
+  --primary-dark: #059669;
+  --primary-foreground: #04140e;
+
+  /* Blue-green accents */
+  --teal: #2dd4bf;
+  --teal-dark: #0f766e;
+  --aqua: #67e8d5;
+  --mint: #a7f3d0;
+
+  /* Borders */
+  --border: rgba(167, 243, 208, 0.12);
+  --border-hover: rgba(52, 211, 153, 0.4);
+  --border-strong: rgba(167, 243, 208, 0.22);
+
+  /* Status */
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --error: #fb7185;
+
+  /* Effects */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 12px 32px rgba(0, 0, 0, 0.2);
+  --shadow-glow: 0 0 32px rgba(52, 211, 153, 0.08);
+
+  /* Layout */
+  --container-width: 1200px;
+  --navbar-height: 76px;
+
+  /* Shape */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 30px;
+  --radius-full: 9999px;
+
+  /* Motion */
+  --transition-fast: 160ms ease;
+  --transition-normal: 240ms ease;
+}
+
+/* ========================================
+   2. TAILWIND THEME MAPPING
+======================================== */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-elevated: var(--surface-elevated);
+
+  --color-foreground: var(--foreground);
+  --color-foreground-secondary: var(--foreground-secondary);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-teal: var(--teal);
+  --color-teal-dark: var(--teal-dark);
+  --color-aqua: var(--aqua);
+  --color-mint: var(--mint);
+
+  --color-border: var(--border);
+  --color-border-hover: var(--border-hover);
+  --color-border-strong: var(--border-strong);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+}
+
+/* ========================================
+   3. RESET & BASE
+======================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--navbar-height) + 24px);
+  background: var(--background);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(52, 211, 153, 0.28);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* ========================================
+   4. TYPOGRAPHY
+======================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  color: var(--foreground);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.035em;
+}
+
+h1 {
+  font-size: clamp(2.75rem, 7vw, 5.5rem);
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+p {
+  margin: 0;
+  color: var(--foreground-secondary);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    115deg,
+    var(--mint) 0%,
+    var(--primary) 48%,
+    var(--teal) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+  content: "";
+}
+
+/* ========================================
+   5. REUSABLE LAYOUT
+======================================== */
+
+.container {
+  width: min(calc(100% - 48px), var(--container-width));
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(80px, 10vw, 144px);
+}
+
+.section-header {
+  max-width: 700px;
+  margin-bottom: 48px;
+}
+
+.section-header h2 {
+  margin-top: 16px;
+}
+
+.section-header p {
+  max-width: 580px;
+  margin-top: 18px;
+}
+
+.section-divider {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong),
+    transparent
+  );
+}
+
+/* ========================================
+   6. SURFACES & CARDS
+======================================== */
+
+.surface {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  background: linear-gradient(
+    145deg,
+    rgba(16, 33, 27, 0.96),
+    rgba(11, 25, 21, 0.96)
+  );
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition:
+    transform var(--transition-normal),
+    border-color var(--transition-normal),
+    background-color var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+}
+
+.glass {
+  background: rgba(8, 19, 16, 0.78);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+/* ========================================
+   7. BUTTONS
+======================================== */
+
+.btn {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    transform var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 0 4px 18px rgba(52, 211, 153, 0.12);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+  color: var(--primary-foreground);
+  box-shadow: 0 6px 24px rgba(52, 211, 153, 0.2);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: var(--border-strong);
+  color: var(--foreground);
+}
+
+.btn-secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--border-hover);
+  color: var(--mint);
+}
+
+/* ========================================
+   8. TAGS & BADGES
+======================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 11px;
+  background: rgba(52, 211, 153, 0.08);
+  border: 1px solid rgba(52, 211, 153, 0.18);
+  border-radius: var(--radius-full);
+  color: var(--mint);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  flex: 0 0 auto;
+  background: var(--primary);
+  border-radius: 50%;
+}
+
+/* ========================================
+   9. FORM ELEMENTS
+======================================== */
+
+.field {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 15px;
+  background: var(--background-secondary);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--foreground);
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.field::placeholder {
+  color: var(--muted-foreground);
+}
+
+.field:hover {
+  border-color: var(--border-hover);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.1);
+}
+
+textarea.field {
+  min-height: 140px;
+  resize: vertical;
+}
+
+/* ========================================
+   10. DECORATIVE BACKGROUNDS
+======================================== */
+
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(167, 243, 208, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(167, 243, 208, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: linear-gradient(to bottom, black, transparent 85%);
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+.bg-glow {
+  background:
+    radial-gradient(
+      ellipse at 15% 10%,
+      rgba(16, 185, 129, 0.12),
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse at 85% 40%,
+      rgba(45, 212, 191, 0.08),
+      transparent 40%
+    );
+}
+
+.glow-orb {
+  position: absolute;
+  width: 320px;
+  aspect-ratio: 1;
+  pointer-events: none;
+  background: rgba(16, 185, 129, 0.1);
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+/* ========================================
+   11. SCROLLBAR
+======================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #285344 var(--background);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #285344;
+  border: 2px solid var(--background);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #34735c;
+}
+
+/* ========================================
+   12. ACCESSIBILITY & RESPONSIVENESS
+======================================== */
+
+@media (max-width: 640px) {
+  :root {
+    --navbar-height: 68px;
+  }
+
+  .container {
+    width: min(calc(100% - 32px), var(--container-width));
+  }
+
+  .section-header {
+    margin-bottom: 32px;
+  }
+
+  .card {
+    padding: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
